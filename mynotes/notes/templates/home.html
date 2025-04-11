@@ -9,7 +9,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">{{ note.title }}</h5>
-                            <a href="#" class="btn btn-warning">Edit</a>
+                            <a href="{% url 'update note' note.id %}" class="btn btn-warning">Edit</a>
                             <a href="{% url 'delete note' note.id %}" class="btn btn-danger" onclick="return confirm('Are you sure, you want to delete {{note.title}}?')">Delete</a>
                         </div>
                     </div>
