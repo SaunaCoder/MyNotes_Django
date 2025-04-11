@@ -5,20 +5,23 @@
     <div class="row" style="height: 90vh;">
         <div class="col-md-3 p-3 border-end" >
             {% for note in notes %}
-                <a href="#" onclick="renderNote('{{note.title}}', '{{note.text}}')" class="text-decoration-none text-dark">
-                    <div class="card" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ note.title }}</h5>
-                            <a href="{% url 'update note' note.id %}" class="btn btn-warning">Edit</a>
-                            <a href="{% url 'delete note' note.id %}" class="btn btn-danger" onclick="return confirm('Are you sure, you want to delete {{note.title}}?')">Delete</a>
-                        </div>
+            <a href="#" 
+                class="text-decoration-none text-dark note-link"
+                data-title="{{ note.title }}"
+                data-text="{{ note.text }}">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ note.title }}</h5>
+                        <a href="{% url 'update note' note.id %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'delete note' note.id %}" class="btn btn-danger" onclick="return confirm('Are you sure, you want to delete {{note.title}}?')">Delete</a>
                     </div>
-                </a>
-            {% endfor %}
+                </div>
+            </a>
+        {% endfor %}
         </div>
         <div class="col-md-7 p-3 border-end" style="word-wrap: break-word;">
             <h2 id="title"></h2>
-            <span id="text"></span>
+            <span id="text" style="white-space: pre-wrap;"></span>
         </div>
         <div class="col-md-2 p-3" style="display: flex; flex-direction: column; height: 100%;">
             <a href="{% url 'create note' %}" class="btn btn-primary">Create note</a>
@@ -34,9 +37,15 @@
 </div>
 
 <script>
-    function renderNote(title, text) {
-        document.getElementById('title').innerHTML = title;
-        document.getElementById('text').innerHTML = text;
-    }
+    document.querySelectorAll('.note-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const title = this.dataset.title;
+            const text = this.dataset.text;
+
+            document.getElementById('title').textContent = title;
+            document.getElementById('text').textContent = text;
+        });
+    });
 </script>
 {% endblock %}
