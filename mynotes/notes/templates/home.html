@@ -2,12 +2,18 @@
 
 {% block content %}
 <div class="container-fluid mt-4 bg-light" >
-    <div class="row" style="height: 100vh;">
+    <div class="row" style="height: 90vh;">
         <div class="col-md-3 p-3 border-end" >adsad</div>
         <div class="col-md-7 p-3 border-end">adasd</div>
-        <div class="col-md-2 p-3">
+        <div class="col-md-2 p-3" style="display: flex; flex-direction: column; height: 100%;">
             <a href="{% url 'create note' %}" class="btn btn-primary">Create note</a>
-            {{ request.user.username }}
+            <div style="margin-top: auto;">
+                <p>Hello, {{ request.user.username }}!</p>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Log out</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
