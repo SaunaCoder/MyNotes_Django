@@ -7,6 +7,7 @@ from .forms import *
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def create_note(request):
     if request.method == 'POST':
         form = NoteForm(request.POST)
