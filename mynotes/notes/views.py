@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from .views import *
@@ -21,3 +21,9 @@ def create_note(request):
     else:
         form = NoteForm()
     return render(request, 'createnote.html', {'form': form})
+
+@login_required
+def delete_note(request, note_id):
+    note = get_object_or_404(Note, id=note_id)
+    note.delete()
+    return redirect('home')
